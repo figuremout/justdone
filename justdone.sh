@@ -3,9 +3,9 @@
 function help() {
     echo -e 'Execute COMMANDS repeatly until it succeeds (default interval 0s)'
     echo -e 'Usage:'
-    echo -e '\tjuststdone.sh [-h|--help]'
-    echo -e '\tjuststdone.sh [-i|--interval=SECS] [--] "COMMANDS"'
-    echo -e '\tjuststdone.sh [-i|--interval SECS] [--] "COMMANDS"'
+    echo -e "\t$0 [-h|--help]"
+    echo -e "\t$0 [-i|--interval=SECS] [--] \"COMMANDS\""
+    echo -e "\t$0 [-i|--interval SECS] [--] \"COMMANDS\""
 }
 
 # parse options
@@ -24,7 +24,7 @@ while true; do
         INTERVAL=$1
         if ! [[ ${INTERVAL} -ge 0 && ${INTERVAL} =~ ^[0-9]+$ ]]; then
             echo "Wrong interval"
-            exit 1;
+            exit 1
         fi
         ;;
     -h | --help)
@@ -51,4 +51,6 @@ while [[ ${status} -ne 0 ]]; do
         ((TIMES += 1))
     fi
 done
+echo -----
+echo Command \"${CMD}\"
 echo Total attempts ${ATTEMPTS}
