@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 function help() {
     echo -e 'Execute COMMANDS repeatly until it succeeds (default interval 0s)'
@@ -47,8 +47,8 @@ while [[ ${status} -ne 0 ]]; do
     eval "${CMD}"
     status=$?
     if [[ ${status} -ne 0 && ${INTERVAL} -gt 0 ]]; then
-        sleep ${ATTEMPTS}
-        ((TIMES += 1))
+        sleep ${INTERVAL}
+        ((ATTEMPTS += 1))
     fi
 done
 echo -----
