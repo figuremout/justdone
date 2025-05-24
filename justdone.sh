@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function help() {
-    echo -e 'Execute COMMANDS repeatly until it succeeds (default interval 0s)'
+    echo -e 'Execute COMMANDS repeatedly until it succeeds (default interval 0s)'
     echo -e 'Usage:'
     echo -e "\t$0 [-h|--help]"
     echo -e "\t$0 [-i|--interval=SECS] [--] \"COMMANDS\""
@@ -42,15 +42,20 @@ done
 # exec commands
 CMD="$@"
 status=1
-ATTEMPTS=1
+ATTEMPTS=0
 while [[ ${status} -ne 0 ]]; do
+    ((ATTEMPTS += 1))
+    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    echo "---------------- Attempt #${ATTEMPTS} [${timestamp}]"
+    echo "Running command: ${CMD}"
     eval "${CMD}"
     status=$?
+
     if [[ ${status} -ne 0 && ${INTERVAL} -gt 0 ]]; then
         sleep ${INTERVAL}
-        ((ATTEMPTS += 1))
     fi
 done
+
 echo -----
-echo Command \"${CMD}\"
-echo Total attempts ${ATTEMPTS}
+echo "Command \"${CMD}\" succeeded."
+echo "Total attempts: ${ATTEMPTS}"
